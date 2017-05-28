@@ -3,15 +3,10 @@ package com.cs122b.group41.fabflix;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
-import android.os.AsyncTask;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -55,7 +50,6 @@ public class LoginActivity extends AppCompatActivity  {
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
-        Log.i("response", "Attempt Login");
 
         boolean cancel = false;
         View focusView = null;
