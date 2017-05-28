@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.cs122b.group41.fabflix.Constants.URLContants;
 
 
 /**
@@ -86,7 +87,7 @@ public class LoginActivity extends AppCompatActivity  {
         // Instantiate the RequestQueue
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
-        String url = "http://aws.howardyu.net:8080/fabflix/login";
+        String url = URLContants.BASE_DEV_SERVER_URL + "/login";
 
         // Request a string response from the provided URL
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
