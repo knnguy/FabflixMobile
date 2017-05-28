@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity  {
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    private void attemptLogin() {
+    public void attemptLogin(View view) {
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
@@ -95,7 +95,6 @@ public class LoginActivity extends AppCompatActivity  {
             }
         }
     }
-
 
     private void connectToTomcat(String username, String password){
         final Map<String, String> params = new HashMap<String, String>();
