@@ -26,11 +26,11 @@ import com.android.volley.toolbox.Volley;
  */
 public class LoginActivity extends AppCompatActivity  {
 
+    private static final String TAG = "LoginActivity";
+
     // UI references.
     private EditText mEmailView;
     private EditText mPasswordView;
-
-    private boolean isValidUser = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +56,14 @@ public class LoginActivity extends AppCompatActivity  {
 
         // Check if the user entered an email
         if (email.isEmpty()) {
-
-            mPasswordView.setError(getString(R.string.error_field_required));
+            mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
         }
 
         // Check if the user entered a password
         if (password.isEmpty()) {
-            mEmailView.setError(getString(R.string.error_field_required));
+            mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
             cancel = true;
         }
@@ -75,64 +74,56 @@ public class LoginActivity extends AppCompatActivity  {
             focusView.requestFocus();
         }
         else {
-            connectToTomcat(email, password);
-            if (isValidUser) {
-                Intent intent = new Intent(this, SearchActivity.class);
-                startActivity(intent);
-            }
-            else {
-                Context context = getApplicationContext();
-                Toast toast = Toast.makeText(context, R.string.error_invalid_user, Toast.LENGTH_SHORT);
-                toast.show();
-                focusView = mEmailView;
-                focusView.requestFocus();
-            }
+            validateUserWithBackend(email, password);
         }
     }
 
-    private void connectToTomcat(String username, String password){
-        final Map<String, String> params = new HashMap<String, String>();
+    private void validateUserWithBackend(String username, String password){
+        final Map<String, String> params = new HashMap<>();
         final String currentUsername = username;
         final String currentPassword = password;
 
         // Instantiate the RequestQueue
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
-        final Context context = getApplicationContext();
-        String url = "http://128.195.52.58:8080/TomcatTest/servlet/TomcatTest";
+        String url = "http://aws.howardyu.net:8080/fabflix/login";
 
         // Request a string response from the provided URL
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("response", response);
-                        validateUser(response);
+                        Log.d(TAG, response);
+                        validateResponse(response);
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("error", error.toString());
                     }
-        }){
+                }
+        ) {
             @Override
-            protected Map<String, String> getParams()
-            {
-                params.put("username",currentUsername);
-                params.put("password",currentPassword);
+            protected Map<String, String> getParams() {
+                params.put("username", currentUsername);
+                params.put("password", currentPassword);
                 return params;
             }
         };
 
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
-
-        return ;
     }
 
-    private void validateUser(String serverResponse) {
+    private void validateResponse(String serverResponse) {
         if (serverResponse.equals("success")) {
-            isValidUser = true;
+            Intent intent = new Intent(this, SearchActivity.class);
+            startActivity(intent);
+        } else {
+            Context context = getApplicationContext();
+            Toast toast = Toast.makeText(context, R.string.error_invalid_user, Toast.LENGTH_SHORT);
+            toast.show();
+            mEmailView.requestFocus();
         }
     }
 
