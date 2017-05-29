@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity  {
         // Instantiate the RequestQueue
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
-        String url = URLContants.BASE_DEV_SERVER_URL + "/login";
+        String url = URLContants.BASE_PROD_SERVER_URL + "/login";
 
         // Request a string response from the provided URL
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,

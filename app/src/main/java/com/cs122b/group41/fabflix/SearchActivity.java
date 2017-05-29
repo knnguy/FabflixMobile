@@ -53,7 +53,7 @@ public class SearchActivity extends AppCompatActivity {
     private void sendQueryToBackend(String searchQuery) {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
-        String url = URLContants.BASE_DEV_SERVER_URL + "/autocompletesearch?fttitle=" + searchQuery;
+        String url = URLContants.BASE_PROD_SERVER_URL + "/autocompletesearch?fttitle=" + searchQuery;
 
         StringRequest searchRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
