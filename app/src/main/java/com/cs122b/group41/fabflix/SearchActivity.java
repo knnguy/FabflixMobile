@@ -66,6 +66,7 @@ public class SearchActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("error", error.toString());
+                        Toast.makeText(getApplicationContext(), "Server is not responding", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
